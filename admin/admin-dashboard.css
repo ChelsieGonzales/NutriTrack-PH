@@ -1,0 +1,155 @@
+:root{
+  --teal:#2c7a7b;
+  --muted:#6c7a7a;
+  --card:#fff;
+  --bg:#f6f9f9;
+  --radius:10px;
+}
+
+*{
+  box-sizing:border-box
+}
+
+body{
+  font-family: 'Montserrat', sans-serif; 
+  margin:0; background:var(--bg); 
+  color:#123;
+}
+
+a{
+  color:inherit
+}
+
+.sidebar{
+  width:260px;
+  background:var(--teal);
+  color:#fff;
+  min-height:100vh;
+  padding:22px;
+  position:fixed;
+  left:0; top:0;
+}
+
+.nav{
+  display:flex; 
+  flex-direction:column; 
+  gap:8px; 
+  margin-top:8px
+}
+
+.nav .nav-link{
+  background:transparent; 
+  color:white; 
+  border:none; 
+  text-align:left;
+  padding:10px 12px; 
+  border-radius:8px; 
+  cursor:pointer; 
+  font-size:16px;
+}
+
+.nav .nav-link.active, .nav .nav-link:hover{
+  background:rgba(0,0,0,0.06); opacity:0.95
+}
+
+.main{
+  margin-left:260px;
+  padding:28px;
+  min-height:100vh;
+}
+
+.metrics{
+  display:flex; 
+  gap:16px; 
+  flex-wrap:wrap; 
+  margin-bottom:20px
+}
+
+.card.metric{
+  background:var(--card); 
+  padding:18px; 
+  border-radius:8px; 
+  flex:1; 
+  min-width:150px; 
+  box-shadow: 0 6px 18px rgba(17,24,24,0.06)
+}
+
+.card-title{
+  font-size:14px; 
+  color:var(--muted); margin-bottom:6px
+}
+
+.card-value{
+  font-weight:800; 
+  font-size:22px; 
+  color:var(--teal)
+}
+
+.container {
+  padding: 30px;
+  font-family: 'Montserrat', sans-serif;
+  color: #123;
+}
+
+h2 {
+  margin: 0 0 15px;
+  color: #234;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.muted {
+  color: #6c7a7a;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.summary-box, .risk-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  margin-bottom: 25px;
+}
+
+.barangay-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.barangay-item {
+  background: #f9ffff;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #dceeee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barangay-name {
+  font-weight: 600;
+}
+
+.barangay-stats {
+  font-size: 14px;
+  color: #245;
+  display: flex;
+  gap: 16px;
+}
+
+.risk-box {
+  border-left: 5px solid #2c7a7b;
+}
+
+.risk-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #2c7a7b;
+}
+
+strong {
+  color: #123;
+}

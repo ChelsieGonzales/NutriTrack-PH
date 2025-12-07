@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Home | NutriTrack PH</title>
+  <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand"><h1>NutriTrack PH</h1></div>
+  <nav class="nav">
+    <button class="nav-link active" onclick="location.href='admin-dashboard.html'">Home</button>
+    <button class="nav-link" onclick="location.href='add-child.html'">Add Child</button>
+    <button class="nav-link" onclick="location.href='children-list.html'">Children List</button>
+    <button class="nav-link" onclick="location.href='reports.html'">Reports</button>
+    <button class="nav-link" onclick="location.href='meals.html'">Meal Plans</button>
+    <button class="nav-link logout" id="logoutBtn">Logout</button>
+  </nav>
+</aside>
+
+<main class="main">
+  <h2>Home</h2>
+  <section class="metrics" id="metrics">
+    <div class="card metric"><div class="card-title">Total Children</div><div class="card-value" id="totalCount">0</div></div>
+    <div class="card metric"><div class="card-title">Normal</div><div class="card-value" id="normalCount">0</div></div>
+    <div class="card metric"><div class="card-title">Underweight</div><div class="card-value" id="underCount">0</div></div>
+    <div class="card metric"><div class="card-title">Overweight</div><div class="card-value" id="overCount">0</div></div>
+    <div class="card metric"><div class="card-title">Obese</div><div class="card-value" id="obeseCount">0</div></div>
+  </section>
+
+  <div class="container">
+    <h2>Barangay Statistic Page</h2>
+  <p class="muted">This report shows the population distribution of Normal, Underweight, Overweight, and Obese children per barangay.</p>
+
+  <div class="summary-box">
+    <h3>Barangay Distribution</h3>
+    <div id="barangayList" class="barangay-list"></div>
+  </div>
+
+  <div class="risk-box">
+    <div class="risk-title">Barangay Most at Risk</div>
+    <p><strong>Highest Obesity Rate:</strong> <span id="highestObesity">—</span></p>
+    <p><strong>Highest Malnutrition Rate (Underweight):</strong> <span id="highestUnderweight">—</span></p>
+  </div>
+</div>
+</main>
+
+<script src="admin-dashboard.js"></script>
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    window.location.href = 'admin.html';
+  });
+  updateMetrics();
+</script>
+

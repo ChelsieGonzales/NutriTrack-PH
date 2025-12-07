@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login | NutriTrack PH</title>
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <h2 class="title">NutriTrack PH</h2>
+    <h3 class="subtitle">WELCOME</h3>
+
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter username" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+      </div>
+
+      <button class="login-btn" type="button" onclick="login()">Login</button>
+      
+      <p class="error" id="errorMsg"></p>
+    </form>
+  </div>
+  
+
+  <script src="admin-script.js"></script>
+
+</body>
+</html>

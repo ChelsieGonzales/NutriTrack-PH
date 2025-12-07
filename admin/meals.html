@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinggang Pinoy | NutriTrack PH</title>
+  <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand"><h1>NutriTrack PH</h1></div>
+  <nav class="nav">
+    <button class="nav-link" onclick="location.href='admin-dashboard.html'">Home</button>
+    <button class="nav-link" onclick="location.href='add-child.html'">Add Child</button>
+    <button class="nav-link" onclick="location.href='children-list.html'">Children List</button>
+    <button class="nav-link" onclick="location.href='reports.html'">Reports</button>
+    <button class="nav-link active">Meals</button>
+    <button class="nav-link logout" id="logoutBtn">Logout</button>
+  </nav>
+</aside>
+
+<main class="main">
+  <h2>Pinggang Pinoy - Schedule Meals</h2>
+
+  <div class="schedule-form">
+    <label for="childSelect">Select Child:</label>
+    <select id="childSelect"></select>
+
+    <label for="mealDate">Select Date:</label>
+    <input type="date" id="mealDate">
+
+    <label for="mealType">Meal:</label>
+    <select id="mealType">
+      <option value="Breakfast">Breakfast</option>
+      <option value="Lunch">Lunch</option>
+      <option value="Dinner">Dinner</option>
+    </select>
+
+    <label for="menu">Menu:</label>
+    <select id="menu">
+      <option value="Arroz Caldo">Arroz Caldo with egg</option>
+      <option value="Adobo">Adobong Manok with Kangkong</option>
+      <option value="Pinakbet + grilled bangus">Pinakbet with bangus</option>
+    </select>
+
+    <button class="btn primary" id="scheduleMeal">Schedule Meal</button>
+  </div>
+
+  <h3>Scheduled Meals</h3>
+  <ul id="scheduledMealsList"></ul>
+</main>
+
+<style>
+  .doneBtn {
+  background: #2c7a7b; /* Teal */
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 6px;
+   margin-top: 3px;
+}
+
+.deleteBtn {
+  background: #e63946; /* Red */
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 6px;
+  margin-top: 3px;
+}
+
+.doneBtn:hover {
+  opacity: 0.85;
+}
+
+.deleteBtn:hover {
+  opacity: 0.85;
+}
+</style>
+
+<script>
+const STORAGE_KEY = 'PINGGANG_PINOY_SCHEDULE';
+
+function readChildren() {
+  try {
+    return JSON.parse(localStorage.getItem('NUTRI_CHILDREN_V1') || '[]');
+  } catch(e) {
+    return [];
+  }
+}
+
+function readScheduledMeals() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveScheduledMeals(meals) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(meals));
+}
+
+function populateChildren() {
+  const select = document.getElementById('childSelect');
+  const children = readChildren();
+  select.innerHTML = '';
+  children.forEach(child => {
+    const option = document.createElement('option');
+    option.value = child.name;
+    option.textContent = `${child.name}`;
+    select.appendChild(option);
+  });
+}
+
+function renderScheduledMeals() {
+  const list = document.getElementById('scheduledMealsList');
+  const meals = readScheduledMeals();
+  list.innerHTML = '';
+  
+  meals.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      ${item.date} - ${item.child}: ${item.meal} → ${item.menu} 
+      [<strong>${item.status || 'Pending'}</strong>]
+      <button class="btn doneBtn" data-index="${index}">Done</button>
+      <button class="btn deleteBtn" data-index="${index}">Delete</button>
+    `;
+    list.appendChild(li);
+  });
+
+  // Add event listeners for the Done and Delete buttons
+  document.querySelectorAll('.doneBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = btn.getAttribute('data-index');
+      markAsDone(idx);
+    });
+  });
+
+  document.querySelectorAll('.deleteBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = btn.getAttribute('data-index');
+      deleteMeal(idx);
+    });
+  });
+}
+
+function markAsDone(index) {
+  const meals = readScheduledMeals();
+  meals[index].status = 'Done';
+  saveScheduledMeals(meals);
+  renderScheduledMeals();
+}
+
+function deleteMeal(index) {
+  const meals = readScheduledMeals();
+  if(confirm(`Are you sure you want to delete this meal for ${meals[index].child}?`)) {
+    meals.splice(index, 1);
+    saveScheduledMeals(meals);
+    renderScheduledMeals();
+  }
+}
+
+document.getElementById('scheduleMeal').addEventListener('click', () => {
+  const child = document.getElementById('childSelect').value;
+  const date = document.getElementById('mealDate').value;
+  const meal = document.getElementById('mealType').value;
+  const menu = document.getElementById('menu').value;
+
+  if(!child || !date) {
+    alert('Please select a child and date.');
+    return;
+  }
+
+  const scheduledMeals = readScheduledMeals();
+  scheduledMeals.push({ child, date, meal, menu, status: 'Pending' });
+  saveScheduledMeals(scheduledMeals);
+  renderScheduledMeals();
+  alert('Meal scheduled successfully!');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  populateChildren();
+  renderScheduledMeals();
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  window.location.href = "admin.html";
+});
+</script>
+</body>
+</html>

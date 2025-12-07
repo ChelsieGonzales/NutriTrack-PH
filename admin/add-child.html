@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Add Child | NutriTrack PH</title>
+  <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand"><h1>NutriTrack PH</h1></div>
+  <nav class="nav">
+    <button class="nav-link" onclick="location.href='admin-dashboard.html'">Home</button>
+    <button class="nav-link active">Add Child</button>
+    <button class="nav-link" onclick="location.href='children-list.html'">Children List</button>
+    <button class="nav-link" onclick="location.href='reports.html'">Reports</button>
+    <button class="nav-link" onclick="location.href='meals.html'">Meal Plans</button>
+    <button class="nav-link logout" id="logoutBtn">Logout</button>
+  </nav>
+</aside>
+
+<main class="main">
+  <h2>Add Child BMI</h2>
+  <p class="muted">Fill in the child's details to compute BMI and save the record. All data is stored locally (demo).</p>
+
+  <form id="quickForm" class="form-grid">
+    <div class="row">
+      <label><span>Name</span><input id="q_name" required></label>
+      <label><span>Barangay</span><input id="q_barangay" placeholder="e.g., Poblacion"></label>
+    </div>
+    <div class="row">
+      <label><span>Age (years)</span><input id="q_age" type="number" min="0" step="1" required></label>
+      <label><span>Weight (kg)</span><input id="q_weight" type="number" min="0" step="0.1" required></label>
+      <label><span>Height (cm)</span><input id="q_height" type="number" min="0" step="0.1" required></label>
+    </div>
+    <div class="form-actions">
+      <button class="btn primary" type="button" id="btnCompute">Compute BMI</button>
+      <div class="bmi-output">
+        <div><strong>BMI:</strong> <span id="bmiOut">—</span></div>
+        <div><strong>Status:</strong> <span id="statusOut">—</span></div>
+      </div>
+      <button class="btn" type="button" id="btnSave">Save Record</button>
+    </div>
+  </form>
+</main>
+
+<style>
+:root{
+  --teal:#2c7a7b;
+  --muted:#6c7a7a;
+  --card:#fff;
+  --bg:#f6f9f9;
+  --radius:10px;
+}
+
+*{
+  box-sizing:border-box
+}
+
+body{
+  font-family: 'Montserrat', sans-serif; 
+  margin:0; background:var(--bg); 
+  color:#123;
+}
+
+a{
+  color:inherit
+}
+
+.sidebar{
+  width:260px;
+  background:var(--teal);
+  color:#fff;
+  min-height:100vh;
+  padding:22px;
+  position:fixed;
+  left:0; top:0;
+}
+
+.nav{
+  display:flex; 
+  flex-direction:column; 
+  gap:8px; 
+  margin-top:8px
+}
+
+.nav .nav-link{
+  background:transparent; 
+  color:white; 
+  border:none; 
+  text-align:left;
+  padding:10px 12px; 
+  border-radius:8px; 
+  cursor:pointer; 
+  font-size:16px;
+}
+
+.nav .nav-link.active, .nav .nav-link:hover{
+  background:rgba(0,0,0,0.06); 
+  opacity:0.95
+}
+
+.main{
+  margin-left:260px;
+  padding:28px;
+  min-height:100vh;
+}
+
+.panels{
+  display:flex; 
+  flex-direction:column; 
+  gap:18px
+}
+
+.panel{
+  background:var(--card); 
+  padding:18px; 
+  border-radius:8px; 
+  box-shadow: 0 8px 20px rgba(10,20,20,0.03)
+}
+
+.panel h3{
+  margin:0 0 8px 0; color:#234
+}
+
+.muted{
+  color:var(--muted); font-size:13px
+}
+
+.form-grid{
+  display:flex; 
+  flex-direction:column; 
+  gap:12px
+}
+
+.row{
+  display:flex; 
+  gap:12px
+}
+
+.row label{
+  flex:1; 
+  display:flex; 
+  flex-direction:column; 
+  gap:6px
+}
+
+.row input, .row textarea, input, select{
+  padding:10px; 
+  border-radius:8px; 
+  border:1px solid #e3efee;
+  background:#fbffff
+}
+
+.form-actions{
+  display:flex; 
+  align-items:center; 
+  gap:12px; 
+  margin-top:8px
+}
+
+.bmi-output{
+  display:flex; 
+  gap:12px; 
+  align-items:center; 
+  color:#163
+  }
+</style>
+
+<script>
+const STORAGE_KEY = 'NUTRI_CHILDREN_V1';
+
+function readChildren() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch (e) { 
+    return [];
+  }
+}
+
+function writeChildren(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+function uid() { 
+  return Date.now() + Math.floor(Math.random() * 999); 
+}
+
+function computeBMI(kg, cm) {
+  if (!kg || !cm) return null;
+  const h = cm / 100;
+  const bmi = kg / (h * h);
+  return Math.round(bmi * 10) / 10;
+}
+
+function classifyBMI(bmi) {
+  if (bmi === null || isNaN(bmi)) return 'Unknown';
+  if (bmi < 18.5) return 'Underweight';
+  if (bmi < 25) return 'Normal';
+  if (bmi < 30) return 'Overweight';
+  return 'Obese';
+}
+
+function computePreview() {
+  const weight = Number(document.getElementById('q_weight').value);
+  const height = Number(document.getElementById('q_height').value);
+  const bmi = computeBMI(weight, height);
+  const status = classifyBMI(bmi);
+
+  document.getElementById('bmiOut').textContent = bmi ?? '—';
+  document.getElementById('statusOut').textContent = status;
+}
+
+function clearQuickForm(){
+  document.getElementById('q_name').value = '';
+  document.getElementById('q_barangay').value = '';
+  document.getElementById('q_age').value = '';
+  document.getElementById('q_weight').value = '';
+  document.getElementById('q_height').value = '';
+  document.getElementById('bmiOut').textContent = '—';
+  document.getElementById('statusOut').textContent = '—';
+}
+
+function saveQuick() {
+  const name = document.getElementById('q_name').value.trim();
+  const barangay = document.getElementById('q_barangay').value.trim();
+  const age = Number(document.getElementById('q_age').value);
+  const weight = Number(document.getElementById('q_weight').value);
+  const height = Number(document.getElementById('q_height').value);
+
+  if (!name || !age || !weight || !height) {
+    alert('Please complete all required fields.');
+    return;
+  }
+
+  const list = readChildren();
+
+  const exists = list.some(child => 
+    child.name.toLowerCase() === name.toLowerCase() &&
+    child.age === age &&
+    child.barangay.toLowerCase() === barangay.toLowerCase()
+  );
+
+  if (exists) {
+    alert("This child is already in the record!");
+    return;
+  }
+
+  const bmi = computeBMI(weight, height);
+  const status = classifyBMI(bmi);
+
+  const data = {
+    id: uid(),
+    name,
+    barangay,
+    age,
+    weight,
+    height,
+    bmi,
+    status,
+    created: new Date().toISOString()
+  };
+
+  list.unshift(data);
+  writeChildren(list);
+  clearQuickForm();
+
+  alert("Child record saved!");
+}
+
+
+  document.getElementById('btnCompute').addEventListener('click', computePreview);
+  document.getElementById('btnSave').addEventListener('click', saveQuick);
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    window.location.href = 'admin.html';
+  });
+</script>
+
+</body>
+</html>
