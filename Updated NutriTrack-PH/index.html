@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NutriTrack PH</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <a href="#" class="logo">
+        <h2 class="text">NutriTrack PH</h2>
+      </a>
+
+      <ul class="menu">
+        <li class="item"><a href="#about" class="link">About Us</a></li>
+        <li class="item"><a href="#features" class="link">Features</a></li>
+        <li class="item"><a href="#resources" class="link">Resources</a></li>
+        <li class="item"><a href="#contact" class="link">Contact Us</a></li>
+        <li class="item"><a href="admin/admin.html" class="link">Admin Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <section id ="about" class="section">
+      <div class="section-content">
+        <div class="details">
+          <h1 class="subtitle">Monitoring and tracking child nutrition for a healthier future</h1>
+          <p class="description"><strong>NutriTrack PH </strong>is an online platform that helps parents, health workers, 
+            and NCOS monitor children's nutrition status and access educational tools.</p>
+            <a href="admin/admin.html" target="_blank" class="res-btn">Get Started</a>
+        </div>
+
+        <figure class="image">
+          <img src="images/kid eating veggies.png" alt="kid eating vegetables">
+          <figcaption>kid eating vegetables</figcaption>
+        </figure>
+      </div>
+    </section>
+    
+    <!-- Features-->
+    <section id="features" class="features">
+      <div class="features-content">
+        <h2 class="features-title">KEY FEATURES</h2>
+        <ul class="features-pics">
+          
+          <!-- Tracking -->
+           <figure class="tracking">
+            <img src="images/weighing.png" alt="Weighing Scale">
+            <h3 class="name">TRACKING</h3>
+            <p class="text">Automatically <strong>calculates BMI </strong>and <strong>classifies nutrition level.</strong></p>
+          </figure>
+          
+          <!-- Notifications -->
+           <figure class="notifications">
+            <img src="images/bell.png" alt="Notification Bell">
+            <h3 class="name">NOTIFICATIONS</h3>
+            <p class="text">Receive <strong>alerts </strong>when a child's nutrition status is at <strong>risk.</strong></p>
+          </figure>
+          
+          <!-- PINGGANG PINOY -->
+           <figure class="food">
+            <img src="images/plate.png" alt="Plate">
+            <h3 class="name">PINGGANG PINOY</h3>
+            <p class="text"><strong>Healthy meal </strong>suggestions based on age and weight.</p>
+          </figure>
+
+          <div class="mission">
+            <h3 class="mission-title">NutriTrack PH MISSION</h3>
+            <ol class="mission-text">
+              <li>Monitoring children's nutrition status through a reliable and user-friendly digital platform.</li>
+              <li>Supporting parents, health workers, and community leaders with accurate data to guide early intervention.</li>
+              <li>Providing educational resources that promote proper nutrition, healthy lifestyles, and child well-being.</li>
+              <li>Reducing malnutrition in the Philippines by making nutrition tracking accessible, efficient, and actionable.</li>
+            </ol>
+          </div>
+          </ul>
+          </div>
+          </section>
+ 
+      <!--RESOURCES-->
+      <section id="resources" class="resources">
+        <div class="resources-content">
+          <h2 class="section-title">EDUCATIONAL RESOURCES</h2>
+          
+          <div class="educational">
+            <figure class="resource-card">
+              <img src="images/unicef.jpg" alt="Unicef PH Logo">
+              <h3>UNICEF PH</h3>
+              <p class="educational-text">
+                Learn about the malnutrition status in the Philippines.
+              </p>
+              <a href="https://www.unicef.org/philippines/press-releases/unicef-many-children-and-adolescents-philippines-are-not-growing-healthily" target="_blank" class="res-btn">Read More</a>
+            </figure>
+            
+            <figure class="resource-card">
+              <img src="images/infographics.png" alt="Infographics About Malnutrition">
+              <h4 class="Rappler">RAPPLER</h4>
+              <p class="potion-text">
+                What malnutrition looks like
+              </p>
+              <a href="https://www.rappler.com/moveph/60075-malnutrition-physical-signs-infographic/" target="_blank" class="res-btn">Read More</a>
+            </figure>
+
+            <div class="video">
+                <img src="images/youtube.jpg" alt="Youtube Logo">
+              <h4>BUTO'T BALAT</h4>
+              <p class="video-text">
+                Buto't Balat, documentary of Kara David.
+              </p>
+              <a href="https://www.youtube.com/watch?v=BFN3nlmHNu8" class="youtube-link">
+                Watch the documentary
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--CONTACT-->
+      <section id="contact" class="contact" >
+        <div class="contact-content">
+          <h2 class="section-title">CONTACT US</h2>
+          <p class="text">
+           If you have questions, feedback, or need support, feel free to reach out.
+          </p>
+
+          <form class="contact-form" action="#" method="post">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Type your name..." required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Your Email Address</label>
+              <input type="email" id="email" name="email" placeholder="Type your email..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+            </div>
+            
+            <button type="submit" class="send-btn" >Send </button>
+          </form>
+        </div>
+      </section>  
+    </main>
+    <script src="script.js"></script>
+</body>
+
+<footer class="footer-bottom">
+  <p>© 2025 NutriTrack PH — All rights reserved.</p>
+</footer>
+</html>
