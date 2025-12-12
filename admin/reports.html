@@ -120,12 +120,10 @@ function updateMetrics() {
     if(child.status === "Underweight") {
       li.innerHTML = `
         ⚠️ ${child.name} — The kid is underweight, 
-        ⚠️ ${child.name} (${child.school}) — The kid is underweight, 
         <a href="meals.html">schedule a feeding program</a>
       `;
     } else if(child.status === "Overweight" || child.status === "Obese") {
       li.innerHTML = `⚠️ ${child.name}  — ${child.status}`;
-      li.innerHTML = `⚠️ ${child.name} (${child.school}) — ${child.status}`;
     } else {
       return;
     }
@@ -157,3 +155,4 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 </body>
 </html>
+
